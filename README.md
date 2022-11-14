@@ -11,3 +11,10 @@
 ## Imagem da tela Cursos Grátis
 
 ![image](https://user-images.githubusercontent.com/30711377/175781198-e224ab00-dd1f-40fd-9e39-b35c3d6e4e74.png)
+
+
+Aplicação de amostra para automação de teste.
+
+
+
+Site implantado https://projeto-site.azurewebsites.net/ ou pode ser baixado e usado localmente.
