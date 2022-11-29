@@ -6,7 +6,7 @@ module.exports = defineConfig({
 
   report: 'junit',
     reporterOptions: {
-      mochaFile: 'results/TESTe-[hash].xml'
+      mochaFile: 'results/TEST-[hash].xml'
     },
 
   e2e: {
