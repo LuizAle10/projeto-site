@@ -6,12 +6,55 @@
 trigger:
 - main
 
-pool:
+stages:
+-stage: Build
+  jobs:
+  -job: BuildWebApp
+   pool:
   vmImage: ubuntu-latest
-
 steps:
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(build.sourcesDirectory)'
     includeRootFolder: false
 - task: PublishBuildArtifacts@1
+
+
+- stage: Dev
+    jobs:
+      - job: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+        - task: DownloadBuildArtifacts@0
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'drop'
+            downloadPath: '$(System.DefaultWorkingDirectory)'
+        - task: AzureRmWebAppDeployment@4
+          inputs:
+            ConnectionType: 'AzureRM'
+            azureSubscription: 'Azure subscription 1(6f60cef6-ac88-4559-9bb8-37d817fddbc9)'
+            
+            appType: 'webApp'
+            WebAppName: 'abookstore'
+            packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
+
+- job: Test
+        dependsOn: Deploy
+        strategy:
+          matrix: 
+            Chrome:
+              Browser: chrome
+            Firefox:
+              Browser: firefox
+          maxParallel: 2
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - template: steps_test.yml
+            parameters:
+                url: 'https://projeto-site.azurewebsites.net/'
+       

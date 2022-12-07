@@ -1,6 +1,7 @@
 describe('Curso Grátis - Applitools', () => {
     beforeEach(() => {
-        cy.visit('https://projeto-site.azurewebsites.net/')
+      //  cy.visit('https://projeto-site.azurewebsites.net/')
+      cy.visit('/')
         cy.eyesOpen()
     })
 
